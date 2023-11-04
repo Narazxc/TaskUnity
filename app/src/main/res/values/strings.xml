@@ -2,7 +2,6 @@
     <string name="app_name">Project_Management</string>
 
     <!--Welcome, SignIn, SingUp Screen-->
-    <string name="taskUnity">Task Unity</string>
     <string name="loginto">Login to your Account</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
