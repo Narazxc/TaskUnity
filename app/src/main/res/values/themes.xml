@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.Project_Management" parent="Base.Theme.Project_Management" />
+
+    <style name="Theme.Project_Management.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
 </resources>
