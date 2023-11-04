@@ -10,7 +10,7 @@
         android:textStyle="bold"
         android:textSize="35sp"
         android:layout_marginTop="64dp"
-        android:text="@string/taskUnity"
+        android:text="@string/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -21,7 +21,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_below="@id/txtLogo"
-        android:text="@string/loginto"
+        android:text="@string/label_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -56,7 +56,7 @@
         android:textColor="@color/white"
         android:elevation="20dp"
         android:textStyle="bold"
-        android:text="@string/signin"
+        android:text="@string/sign_in"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
@@ -71,7 +71,7 @@
         android:layout_marginTop="64dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/btbSignIn"
-        android:text="@string/signinwith"
+        android:text="@string/sign_up_with"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -111,11 +111,14 @@
         android:src="@drawable/ic_twitter" />
 
     <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_margin="32dp"
-        android:layout_below="@id/icGoogle"
-        android:text="@string/donthaveacc"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/icGoogle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/dont_have_acc" />
 
 </RelativeLayout>
