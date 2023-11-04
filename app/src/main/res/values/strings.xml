@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">Task Unity</string>
+    <string name="app_name">Project_Management</string>
+
+    <!--Welcome, SignIn, SingUp Screen-->
+    <string name="loginto">Login to your Account</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="signinwith">-Or, Sign in with-</string>
+    <string name="signin">Sign In</string>
+    <string name="donthaveacc">Don't have an account? Sign Up</string>
+
+    <string name="creat_acc">Create your Account</string>
+    <string name="com_password">Confirm Password</string>
+    <string name="signup">Sign Up</string>
+    <string name="sign_up_with">-Or, sign up with-</string>
 </resources>
