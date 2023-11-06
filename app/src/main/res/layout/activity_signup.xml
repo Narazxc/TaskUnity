@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:id="@+id/txtLogo"
+        android:textColor="@color/main_color"
+        android:textStyle="bold"
+        android:textSize="35sp"
+        android:layout_marginTop="64dp"
+        android:text="@string/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/txtLogInTo"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@id/txtLogo"
+        android:text="@string/create_acc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/eTxtEmail"
+        android:background="@drawable/round_edittext"
+        android:hint="@string/email"
+        android:elevation="20dp"
+        android:paddingStart="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_below="@id/txtLogInTo"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <EditText
+        android:id="@+id/eTxtPass"
+        android:background="@drawable/round_edittext"
+        android:hint="@string/password"
+        android:elevation="20dp"
+        android:paddingStart="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_below="@id/eTxtEmail"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <EditText
+        android:id="@+id/eTxtConPass"
+        android:background="@drawable/round_edittext"
+        android:hint="@string/com_password"
+        android:elevation="20dp"
+        android:paddingStart="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_below="@id/eTxtPass"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    
+    <Button
+        android:id="@+id/btbSignIn"
+        android:textColor="@color/white"
+        android:elevation="20dp"
+        android:textStyle="bold"
+        android:text="@string/sign_up"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_below="@id/eTxtConPass"
+        android:background="@drawable/round_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <TextView
+        android:id="@+id/txtSignIn"
+        android:textStyle="bold"
+        android:layout_marginTop="64dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btbSignIn"
+        android:text="@string/sign_up_with"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/icGoogle"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@id/txtSignIn"
+        android:layout_alignStart="@id/icFacebook"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="-64dp"
+        android:elevation="20dp"
+        android:src="@drawable/ic_google" />
+
+    <ImageView
+        android:id="@+id/icFacebook"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@id/txtSignIn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:elevation="20dp"
+        android:src="@drawable/ic_facebook" />
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@id/txtSignIn"
+        android:layout_alignEnd="@id/icFacebook"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="-64dp"
+        android:elevation="20dp"
+        android:src="@drawable/ic_twitter" />
+
+</RelativeLayout>
