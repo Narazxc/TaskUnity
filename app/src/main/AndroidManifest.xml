@@ -16,19 +16,27 @@
             android:name=".SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Project_Management.NoActionBar" />
+            android:theme="@style/Theme.Project_Management.NoActionBar">
+
+
+
+
+        </activity>
       
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.No_Action_Bar"
+            android:theme="@style/Theme.Project_Management.NoActionBar"
             android:exported="true">
-  
-          <intent-filter>
+<!--            android:theme="@style/AppTheme.No_Action_Bar"-->
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-           </intent-filter>
-          
+            </intent-filter>
+
+
+
+
         </activity>
     </application>
 
