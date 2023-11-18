@@ -65,7 +65,7 @@
         android:layout_height="50dp"/>
     
     <Button
-        android:id="@+id/btbSignIn"
+        android:id="@+id/btbSignUp"
         android:textColor="@color/white"
         android:elevation="20dp"
         android:textStyle="bold"
