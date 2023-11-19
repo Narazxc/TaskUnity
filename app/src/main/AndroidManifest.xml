@@ -18,6 +18,9 @@
             android:theme="@style/AppTheme.No_Action_Bar"
             android:exported="false" />
         <activity
+            android:name=".SignInActivity"
+            android:exported="false" />
+        <activity
             android:name=".SignUpActivity"
             android:exported="false" />
         <activity
