@@ -36,6 +36,11 @@
     <string name="mobile">Mobile</string>
     <string name="update">UPDATE</string>
     <string name="my_profile_title">My Profile</string>
-    <dimen name="et_text_size">16sp</dimen>
+
+    <!--Board Activity-->
+    <string name="create_board_title">Create Board</string>
+    <string name="create">CREATE</string>
+    <string name="board_name">Board Name</string>
+    <string name="add_task">Add Task</string>
 
 </resources>

@@ -41,4 +41,13 @@
   <dimen name="btn_paddingTopBottom">8dp</dimen>
   <dimen name="btn_text_size">18sp</dimen>
 
+  <!-- Create board!!! -->
+  <dimen name="fab_margin">16dp</dimen>
+  <dimen name="create_board_content_padding">16dp</dimen>
+  <dimen name="board_image_size">100dp</dimen>
+  <dimen name="create_board_til_marginTop">25dp</dimen>
+  <dimen name="create_board_btn_marginTop">3dp</dimen>
+  <dimen name="card_view_layout_content_padding">16dp</dimen>
+  <dimen name="et_text_size">20sp</dimen>
+
 </resources>
