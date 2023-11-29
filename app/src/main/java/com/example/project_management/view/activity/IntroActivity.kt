@@ -1,4 +1,4 @@
-package com.example.project_management
+package com.example.project_management.view.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

@@ -1,9 +1,9 @@
-package com.example.project_management
+package com.example.project_management.view.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.project_management.view.activity.CreateBoardActivity
+import com.example.project_management.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {

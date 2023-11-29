@@ -85,7 +85,7 @@
         android:textStyle="bold"
         android:layout_marginTop="64dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/btbSignIn"
+        android:layout_below="@id/btbSignUp"
         android:text="@string/sign_up_with"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -124,5 +124,31 @@
         android:layout_marginEnd="-64dp"
         android:elevation="20dp"
         android:src="@drawable/ic_twitter" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/already_have_acc"
+        android:layout_below="@id/icGoogle"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/already_have_acc" />
+
+        <TextView
+            android:id="@+id/txtSignInLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign In"
+            android:textColor="@color/colorPrimary" />
+    </LinearLayout>
+
+
 
 </RelativeLayout>
