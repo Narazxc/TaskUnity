@@ -10,6 +10,8 @@
     <string name="sign_in_with">-Or, Sign in with-</string>
     <string name="sign_in">Sign In</string>
     <string name="dont_have_acc">Don\'t have an account? </string>
+    <string name="already_have_acc">Already have account? </string>
+
 
     <string name="create_acc">Create your Account</string>
     <string name="com_password">Confirm Password</string>
