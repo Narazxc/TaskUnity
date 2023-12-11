@@ -66,20 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
 
-    <EditText
-        android:id="@+id/eTxtConPass"
-        android:background="@drawable/round_edittext"
-        android:hint="@string/com_password"
-        android:elevation="20dp"
-        android:inputType="textPassword"
-        android:paddingStart="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_below="@id/eTxtPass"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>
-    
+
     <Button
         android:id="@+id/btbSignUp"
         android:textColor="@color/white"
@@ -89,7 +76,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:layout_below="@id/eTxtConPass"
+        android:layout_below="@id/eTxtPass"
         android:background="@drawable/round_button"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
