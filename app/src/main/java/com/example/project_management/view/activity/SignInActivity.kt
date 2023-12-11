@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.project_management.R
 import com.example.project_management.databinding.ActivitySigninBinding
+import com.example.project_management.viewmodel.User
 import com.google.firebase.auth.FirebaseAuth
 
 class SignInActivity : BaseActivity() {
@@ -23,6 +24,12 @@ class SignInActivity : BaseActivity() {
             startActivity(Intent(this@SignInActivity, SignUpActivity::class.java))
         }
         binding.btbSignIn.setOnClickListener { signInRegisteredUser() }
+    }
+
+    fun signInSuccess(user: User){
+        hideProgressDialog()
+        startActivity(Intent(this@SignInActivity, MainActivity::class.java))
+        finish()
     }
 
     private fun signInRegisteredUser(){
