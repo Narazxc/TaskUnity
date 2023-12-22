@@ -13,7 +13,6 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         Handler().postDelayed({
-
             var currentUserID = FirestoreClass().getCurrentUserId()
             if (currentUserID.isNotEmpty()) {
                 startActivity(Intent(this, MainActivity::class.java))
@@ -21,6 +20,6 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(Intent(this, IntroActivity::class.java))
             }
             finish()
-        },2500)
+        }, 2500)
     }
 }

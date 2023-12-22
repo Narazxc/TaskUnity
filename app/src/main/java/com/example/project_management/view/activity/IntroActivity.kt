@@ -1,7 +1,6 @@
 package com.example.project_management.view.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.project_management.databinding.ActivityIntroBinding
 
@@ -16,6 +15,7 @@ class IntroActivity : BaseActivity() {
         binding.btnSignUpIntro.setOnClickListener {
             startActivity(Intent(this@IntroActivity, SignUpActivity::class.java))
         }
+
         binding.btnSignInIntro.setOnClickListener {
             startActivity(Intent(this@IntroActivity, SignInActivity::class.java))
         }

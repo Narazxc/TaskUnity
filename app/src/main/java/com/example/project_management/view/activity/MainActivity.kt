@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide
 import com.example.project_management.firebase.FirestoreClass
 import com.example.project_management.viewmodel.User
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
 
 //BaseActivity(), NavigationView.OnNavigationItemSelectedListener
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -112,22 +111,15 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         when (item.itemId) {
             R.id.nav_my_profile ->{
-                Toast.makeText(this@MainActivity, "My Profile", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "My Profile", Toast.LENGTH_LONG).show()
             }
 
             R.id.nav_sign_out ->{
-//                Toast.makeText(this@MainActivity, "Sign out", Toast.LENGTH_SHORT).show()
-                FirebaseAuth.getInstance().signOut()
-
-                val intent = Intent(this, IntroActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-
-
-                startActivity(intent)
-                finish()
+                Toast.makeText(this@MainActivity, "Sign out", Toast.LENGTH_LONG).show()
             }
 
         }
+
 
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
