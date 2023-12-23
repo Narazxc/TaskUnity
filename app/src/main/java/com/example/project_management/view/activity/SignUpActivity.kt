@@ -16,6 +16,7 @@ class SignUpActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_signup)
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -27,33 +28,34 @@ class SignUpActivity : BaseActivity() {
         }
         binding.btbSignUp.setOnClickListener { registerUser() }
     }
-
-    fun userRegisteredSuccess() {
+    fun userRegisteredSuccess(){
         Toast.makeText(this@SignUpActivity, "You have successfully registered the email", Toast.LENGTH_LONG).show()
         hideProgressDialog()
         FirebaseAuth.getInstance().signOut()
         finish()
     }
 
-    private fun registerUser() {
+    private fun registerUser(){
         val name: String = binding.eTxtName.text.toString().trim()
         val email: String = binding.eTxtEmail.text.toString().trim()
         val password: String = binding.eTxtPass.text.toString().trim()
-        if (validateForm(name, email, password)) {
+        if(validateForm(name, email, password)){
             showProgressDialog("Please wait...")
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     hideProgressDialog()
-                    if (task.isSuccessful) {
+                    if(task.isSuccessful){
                         val firebaseUser: FirebaseUser = task.result!!.user!!
                         val registeredEmail = firebaseUser.email!!
                         val user = User(firebaseUser.uid, name, registeredEmail)
                         FirestoreClass().registerUser(this@SignUpActivity, user)
-                    } else {
+
+                    }else{
                         Toast.makeText(this@SignUpActivity, task.exception!!.message.toString(), Toast.LENGTH_LONG).show()
                     }
                 }
         }
+
     }
 
     private fun validateForm(name: String, email: String, password: String): Boolean {
@@ -75,4 +77,5 @@ class SignUpActivity : BaseActivity() {
             }
         }
     }
+
 }
