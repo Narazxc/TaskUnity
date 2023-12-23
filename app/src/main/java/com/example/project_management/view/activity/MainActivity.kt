@@ -11,8 +11,11 @@ import com.example.project_management.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import com.bumptech.glide.Glide
+import com.example.project_management.utils.Constants
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.auth.User
 
 //BaseActivity(), NavigationView.OnNavigationItemSelectedListener
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -20,16 +23,17 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toolbar: Toolbar
     private lateinit var navView: NavigationView
-
+    private lateinit var mUserName: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val fabButton: FloatingActionButton = findViewById(R.id.fab_create_board)
-
         fabButton.setOnClickListener {
-            startActivity(Intent(this,
-                CreateBoardActivity::class.java))
+            val intent = Intent(this,
+                CreateBoardActivity::class.java)
+            intent.putExtra(Constants.NAME, mUserName)
+            startActivity(intent)
         }
 
         setUpActionBar()
@@ -67,9 +71,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         } else {
             doubleBackToExit()
         }
-
+        super.onBackPressed()
     }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
@@ -94,7 +97,4 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
-
-
-
 }
