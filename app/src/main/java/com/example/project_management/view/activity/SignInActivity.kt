@@ -1,6 +1,7 @@
 package com.example.project_management.view.activity
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.project_management.R
 import com.example.project_management.databinding.ActivitySigninBinding
@@ -13,10 +14,11 @@ class SignInActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySigninBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
+        setContentView(R.layout.activity_signin)
         auth = FirebaseAuth.getInstance()
+        binding = ActivitySigninBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
 
         binding.txtSignUp.setOnClickListener {
             startActivity(Intent(this@SignInActivity, SignUpActivity::class.java))
@@ -24,25 +26,25 @@ class SignInActivity : BaseActivity() {
         binding.btbSignIn.setOnClickListener { signInRegisteredUser() }
     }
 
-    fun signInSuccess(user: User) {
+    fun signInSuccess(user: User){
         hideProgressDialog()
         startActivity(Intent(this@SignInActivity, MainActivity::class.java))
         finish()
     }
 
-    private fun signInRegisteredUser() {
+    private fun signInRegisteredUser(){
         val email: String = binding.eTxtEmailSignIn.text.toString().trim()
         val password: String = binding.eTxtPassSignIn.text.toString().trim()
-
-        if (validateForm(email, password)) {
+        if(validateForm(email, password)){
             showProgressDialog("Please wait...")
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     hideProgressDialog()
-                    if (task.isSuccessful) {
+                    if(task.isSuccessful){
                         val user = auth.currentUser
-                        signInSuccess(user as User)
-                    } else {
+                        startActivity(Intent(this@SignInActivity, MainActivity::class.java))
+                        finish()
+                    }else{
                         showErrorSnackBar(task.exception!!.message.toString())
                     }
                 }
@@ -64,4 +66,5 @@ class SignInActivity : BaseActivity() {
             }
         }
     }
+
 }
