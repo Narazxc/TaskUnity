@@ -1,9 +1,7 @@
 package com.example.project_management.view.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
@@ -36,8 +34,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val fabButton: FloatingActionButton = findViewById(R.id.fab_create_board)
 
         fabButton.setOnClickListener {
-            startActivity(Intent(this,
-                CreateBoardActivity::class.java))
+            startActivity(
+                Intent(
+                    this,
+                    CreateBoardActivity::class.java
+                )
+            )
         }
 
         setUpActionBar()
@@ -45,7 +47,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         navView = findViewById(R.id.nav_view)
         navView.setNavigationItemSelectedListener(this)
 
-        FirestoreClass().signInUser(this@MainActivity)
+        FirestoreClass().loadUserData(this@MainActivity)
 
 
     }
@@ -112,7 +114,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         when (item.itemId) {
             R.id.nav_my_profile ->{
-                Toast.makeText(this@MainActivity, "My Profile", Toast.LENGTH_LONG).show()
+                // Toast.makeText(this@MainActivity, "My Profile", Toast.LENGTH_LONG).show()
+                startActivity(Intent(this@MainActivity, MyProfileActivity::class.java))
             }
 
             R.id.nav_sign_out ->{
