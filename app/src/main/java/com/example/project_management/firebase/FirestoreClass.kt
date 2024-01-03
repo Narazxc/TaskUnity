@@ -32,6 +32,73 @@ class FirestoreClass {
             }
     }
 
+
+    fun updateUserProfileData(
+        activity: MyProfileActivity,
+        userHashMap: HashMap<String, Any>
+    ) {
+        mFireStore.collection(Constants.USERS)
+            .document(getCurrentUserId())
+            .update(userHashMap)
+            .addOnSuccessListener {
+                Log.i(activity.javaClass.simpleName, "Profile Data updated successfully!")
+
+                Toast.makeText(activity, "Profile updated successfully!", Toast.LENGTH_SHORT).show()
+
+                activity.profileUpdateSuccess()
+            }.addOnFailureListener { e ->
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while creating a board.",
+                    e
+                )
+                Toast.makeText(activity, "Error when updating the profile!", Toast.LENGTH_LONG)
+                    .show()
+            }
+    }
+
+
+
+        fun loadUserData(activity: Activity) {
+
+            mFireStore.collection(Constants.USERS)
+                .document(getCurrentUserId())
+                .get()
+                .addOnSuccessListener { document ->
+                    val loggedInUser = document.toObject(User::class.java)!!
+                    when (activity) {
+                        is SignInActivity -> {
+                            activity.signInSuccess(loggedInUser)
+                        }
+
+                        is MainActivity -> {
+                            activity.updateNavigationUserDetails(loggedInUser)
+                        }
+
+                        is MyProfileActivity -> {
+                            activity.setUserDataInUI(loggedInUser)
+                        }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    when (activity) {
+                        is SignInActivity -> {
+                            activity.hideProgressDialog()
+                        }
+
+                        is MainActivity -> {
+                            activity.hideProgressDialog()
+                        }
+                    }
+                    Log.e(activity.javaClass.simpleName, "Error while registering the user", e)
+                }
+        }
+
+
+
+
+
     fun createBoard(activity: CreateBoardActivity, board: Board) {
         mFireStore.collection(Constants.BOARDS)
             .document()
@@ -47,38 +114,6 @@ class FirestoreClass {
                     "Error while creating a board.",
                     exception
                 )
-            }
-    }
-
-    fun loadUserData(activity: Activity){
-
-        mFireStore.collection(Constants.USERS)
-            .document(getCurrentUserId())
-            .get()
-            .addOnSuccessListener { document ->
-                val loggedInUser = document.toObject(User::class.java)!!
-                when (activity) {
-                    is SignInActivity -> {
-                        activity.signInSuccess(loggedInUser)
-                    }
-                    is MainActivity -> {
-                        activity.updateNavigationUserDetails(loggedInUser)
-                    }
-                    is MyProfileActivity -> {
-                        activity.setUserDataInUI(loggedInUser)
-                    }
-                }
-            }
-            .addOnFailureListener { e ->
-                when (activity) {
-                    is SignInActivity -> {
-                        activity.hideProgressDialog()
-                    }
-                    is MainActivity -> {
-                        activity.hideProgressDialog()
-                    }
-                }
-                Log.e(activity.javaClass.simpleName, "Error while registering the user", e)
             }
     }
 
