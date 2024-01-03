@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.example.project_management.utils.Constants
 import com.example.project_management.view.activity.CreateBoardActivity
 import com.example.project_management.view.activity.MainActivity
+import com.example.project_management.view.activity.MyProfileActivity
 import com.example.project_management.view.activity.SignInActivity
 import com.example.project_management.view.activity.SignUpActivity
 import com.example.project_management.viewmodel.Board
@@ -49,7 +50,8 @@ class FirestoreClass {
             }
     }
 
-    fun signInUser(activity: Activity) {
+    fun loadUserData(activity: Activity){
+
         mFireStore.collection(Constants.USERS)
             .document(getCurrentUserId())
             .get()
@@ -61,6 +63,9 @@ class FirestoreClass {
                     }
                     is MainActivity -> {
                         activity.updateNavigationUserDetails(loggedInUser)
+                    }
+                    is MyProfileActivity -> {
+                        activity.setUserDataInUI(loggedInUser)
                     }
                 }
             }
