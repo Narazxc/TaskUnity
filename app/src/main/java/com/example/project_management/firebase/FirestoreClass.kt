@@ -33,8 +33,10 @@ class FirestoreClass {
     }
 
 
-    fun updateUserProfileData(activity: MyProfileActivity,
-                              userHashMap: HashMap<String, Any>) {
+    fun updateUserProfileData(
+        activity: MyProfileActivity,
+        userHashMap: HashMap<String, Any>
+    ) {
         mFireStore.collection(Constants.USERS)
             .document(getCurrentUserId())
             .update(userHashMap)
@@ -44,16 +46,58 @@ class FirestoreClass {
                 Toast.makeText(activity, "Profile updated successfully!", Toast.LENGTH_SHORT).show()
 
                 activity.profileUpdateSuccess()
-            }.addOnFailureListener{
-                e -> 
+            }.addOnFailureListener { e ->
                 activity.hideProgressDialog()
                 Log.e(
                     activity.javaClass.simpleName,
                     "Error while creating a board.",
                     e
                 )
-                Toast.makeText(activity, "Error when updating the profile!", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "Error when updating the profile!", Toast.LENGTH_LONG)
+                    .show()
             }
+    }
+
+
+
+        fun loadUserData(activity: Activity) {
+
+            mFireStore.collection(Constants.USERS)
+                .document(getCurrentUserId())
+                .get()
+                .addOnSuccessListener { document ->
+                    val loggedInUser = document.toObject(User::class.java)!!
+                    when (activity) {
+                        is SignInActivity -> {
+                            activity.signInSuccess(loggedInUser)
+                        }
+
+                        is MainActivity -> {
+                            activity.updateNavigationUserDetails(loggedInUser)
+                        }
+
+                        is MyProfileActivity -> {
+                            activity.setUserDataInUI(loggedInUser)
+                        }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    when (activity) {
+                        is SignInActivity -> {
+                            activity.hideProgressDialog()
+                        }
+
+                        is MainActivity -> {
+                            activity.hideProgressDialog()
+                        }
+                    }
+                    Log.e(activity.javaClass.simpleName, "Error while registering the user", e)
+                }
+        }
+
+
+
+
 
     fun createBoard(activity: CreateBoardActivity, board: Board) {
         mFireStore.collection(Constants.BOARDS)
@@ -63,46 +107,13 @@ class FirestoreClass {
                 Log.e(activity.javaClass.simpleName, "Board Create Successfully")
                 Toast.makeText(activity, "Board Create Successfully", Toast.LENGTH_SHORT).show()
                 activity.boardCreatedSuccessfully()
-            }.addOnFailureListener { exception -> 
-              activity.hideProgressDialog()
-              Log.e(
+            }.addOnFailureListener { exception ->
+                activity.hideProgressDialog()
+                Log.e(
                     activity.javaClass.simpleName,
                     "Error while creating a board.",
                     exception
                 )
-            }
-
-    }
-
-    fun loadUserData(activity: Activity){
-
-        mFireStore.collection(Constants.USERS)
-            .document(getCurrentUserId())
-            .get()
-            .addOnSuccessListener { document ->
-                val loggedInUser = document.toObject(User::class.java)!!
-                when (activity) {
-                    is SignInActivity -> {
-                        activity.signInSuccess(loggedInUser)
-                    }
-                    is MainActivity -> {
-                        activity.updateNavigationUserDetails(loggedInUser)
-                    }
-                    is MyProfileActivity -> {
-                        activity.setUserDataInUI(loggedInUser)
-                    }
-                }
-            }
-            .addOnFailureListener { e ->
-                when (activity) {
-                    is SignInActivity -> {
-                        activity.hideProgressDialog()
-                    }
-                    is MainActivity -> {
-                        activity.hideProgressDialog()
-                    }
-                }
-                Log.e(activity.javaClass.simpleName, "Error while registering the user", e)
             }
     }
 
