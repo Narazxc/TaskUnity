@@ -74,6 +74,9 @@ class MyProfileActivity : BaseActivity() {
                 uploadUserImage()
             } else {
                 showProgressDialog(resources.getString(R.string.please_wait))
+
+                // Call a function to update user details in the database.
+                updateUserProfileData()
             }
         }
     }
@@ -169,11 +172,11 @@ class MyProfileActivity : BaseActivity() {
             userHashMap[Constants.MOBILE] = binding.etMobile.text.toString().toLong()
         }
 
-
-
             FirestoreClass().updateUserProfileData(this, userHashMap)
 
     }
+
+
 
 
     private fun uploadUserImage() {
@@ -215,7 +218,6 @@ class MyProfileActivity : BaseActivity() {
 
         }
     }
-
 
 
     // function to get file extension base on uri
