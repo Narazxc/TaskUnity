@@ -1,5 +1,6 @@
 package com.example.project_management.view.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -22,6 +23,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     companion object{
         const val MY_PROFILE_REQUEST_CODE: Int = 11
+        const val CREATE_BOARD_REQUEST_CODE: Int = 12
     }
 
     private lateinit var drawerLayout: DrawerLayout
@@ -37,7 +39,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
             val intent = Intent(this, CreateBoardActivity::class.java)
             intent.putExtra(Constants.NAME, mUserName)
-            startActivity(intent)
+            startActivityForResult(intent, CREATE_BOARD_REQUEST_CODE)
 
         }
 
@@ -127,7 +129,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         super.onActivityResult(requestCode, resultCode, data)
         if ((requestCode == MY_PROFILE_REQUEST_CODE) && (resultCode == RESULT_OK)){
             FirestoreClass().loadUserData(this)
-        } else {
+        } else if(requestCode == CREATE_BOARD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            FirestoreClass().getBoardList(this)
+        }
+        else {
             Toast.makeText(this, "Profile update failed", Toast.LENGTH_LONG).show()
         }
     }
