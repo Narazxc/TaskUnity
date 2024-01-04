@@ -74,7 +74,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
             adapter.setOnClickListener(object : BoardItemAdapter.OnClickListener {
                 override fun onClick(position: Int, model: com.example.project_management.viewmodel.Board) {
-                    startActivity(Intent(this@MainActivity, TaskListActivity::class.java))
+                    val intent = Intent(this@MainActivity, TaskListActivity::class.java)
+                    intent.putExtra(Constants.DOCUMENT_ID, model.documentId)
+                    startActivity(intent)
                 }
             })
         } else{
@@ -112,7 +114,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         if (readBoardsList){
             showProgressDialog(resources.getString(R.string.please_wait))
-            FirestoreClass().getBoardList(this)
+            FirestoreClass().getBoardList(this )
         }
     }
 

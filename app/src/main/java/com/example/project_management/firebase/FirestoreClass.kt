@@ -9,6 +9,7 @@ import com.example.project_management.view.activity.MainActivity
 import com.example.project_management.view.activity.MyProfileActivity
 import com.example.project_management.view.activity.SignInActivity
 import com.example.project_management.view.activity.SignUpActivity
+import com.example.project_management.view.activity.TaskListActivity
 import com.example.project_management.viewmodel.Board
 import com.example.project_management.viewmodel.User
 import com.google.firebase.auth.FirebaseAuth
@@ -32,6 +33,22 @@ class FirestoreClass {
             }
     }
 
+    fun getBoardDetails(activity: TaskListActivity, documentId: String) {
+        mFireStore.collection(Constants.BOARDS)
+            .document(documentId)
+            .get()
+            .addOnSuccessListener { document ->
+                Log.i(activity.javaClass.simpleName, document.toString())
+                val board = document.toObject(Board::class.java)!!
+                board.documentId = document.id
+                activity.boardDetails(board)
+            }.addOnFailureListener { e ->
+                activity.hideProgressDialog()
+                Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
+            }
+    }
+
+    // A function to get the list of boards from the cloud firestore
     fun getBoardList(activity: MainActivity) {
         mFireStore.collection(Constants.BOARDS)
             .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserId())
