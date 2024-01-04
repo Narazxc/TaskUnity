@@ -10,6 +10,7 @@ object Constants {
 
     const val USERS: String = "users"
 
+
     const val BOARDS: String = "boards"
 
     const val IMAGE: String = "image"
@@ -29,4 +30,5 @@ object Constants {
         return MimeTypeMap.getSingleton()
             .getExtensionFromMimeType(activity.contentResolver.getType(uri!!))
     }
+
 }
