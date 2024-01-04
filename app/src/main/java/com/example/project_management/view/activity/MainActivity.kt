@@ -12,9 +12,12 @@ import com.example.project_management.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.project_management.adapters.BoardItemAdapter
 import com.example.project_management.utils.Constants
 import com.example.project_management.firebase.FirestoreClass
+import com.example.project_management.viewmodel.Board
 import com.example.project_management.viewmodel.User
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -53,21 +56,27 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     }
 
-    fun populateBoardListToUI(boardList: ArrayList<com.example.project_management.viewmodel.Board>) {
+    fun populateBoardListToUI(boardList: ArrayList<Board>) {
 
         hideProgressDialog()
 
         if (boardList.size > 0) {
             findViewById<TextView>(R.id.tv_no_boards_available).visibility = android.view.View.GONE
-            findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_board_list).visibility =
+            findViewById<RecyclerView>(R.id.rv_board_list).visibility =
                 android.view.View.VISIBLE
 
-            val rvBoardList = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_board_list)
+            val rvBoardList = findViewById<RecyclerView>(R.id.rv_board_list)
             rvBoardList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@MainActivity)
             rvBoardList.setHasFixedSize(true)
 
             val adapter = com.example.project_management.adapters.BoardItemAdapter(this@MainActivity, boardList)
             rvBoardList.adapter = adapter
+
+            adapter.setOnClickListener(object : BoardItemAdapter.OnClickListener {
+                override fun onClick(position: Int, model: com.example.project_management.viewmodel.Board) {
+                    startActivity(Intent(this@MainActivity, TaskListActivity::class.java))
+                }
+            })
         } else{
             findViewById<TextView>(R.id.tv_no_boards_available).visibility = android.view.View.VISIBLE
             findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_board_list).visibility =
