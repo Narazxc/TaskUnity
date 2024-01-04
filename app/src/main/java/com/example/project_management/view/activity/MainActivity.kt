@@ -20,6 +20,10 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    companion object{
+        const val MY_PROFILE_REQUEST_CODE: Int = 11
+    }
+
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toolbar: Toolbar
     private lateinit var mUserName: String
@@ -92,12 +96,21 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         super.onBackPressed()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if ((requestCode == MY_PROFILE_REQUEST_CODE) && (resultCode == RESULT_OK)){
+            FirestoreClass().loadUserData(this)
+        } else {
+            Toast.makeText(this, "Profile update failed", Toast.LENGTH_LONG).show()
+        }
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
 
             R.id.nav_my_profile ->{
                 // Toast.makeText(this@MainActivity, "My Profile", Toast.LENGTH_LONG).show()
-                startActivity(Intent(this@MainActivity, MyProfileActivity::class.java))
+                startActivityForResult(Intent(this@MainActivity, MyProfileActivity::class.java), MY_PROFILE_REQUEST_CODE)
             }
 
             R.id.nav_sign_out -> {
