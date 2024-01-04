@@ -47,8 +47,30 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         navView.setNavigationItemSelectedListener(this)
 
 
-        FirestoreClass().loadUserData(this@MainActivity)
+        FirestoreClass().loadUserData(this@MainActivity, true)
 
+    }
+
+    fun populateBoardListToUI(boardList: ArrayList<com.example.project_management.viewmodel.Board>) {
+
+        hideProgressDialog()
+
+        if (boardList.size > 0) {
+            findViewById<TextView>(R.id.tv_no_boards_available).visibility = android.view.View.GONE
+            findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_board_list).visibility =
+                android.view.View.VISIBLE
+
+            val rvBoardList = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_board_list)
+            rvBoardList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@MainActivity)
+            rvBoardList.setHasFixedSize(true)
+
+            val adapter = com.example.project_management.adapters.BoardItemAdapter(this@MainActivity, boardList)
+            rvBoardList.adapter = adapter
+        } else{
+            findViewById<TextView>(R.id.tv_no_boards_available).visibility = android.view.View.VISIBLE
+            findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_board_list).visibility =
+                android.view.View.GONE
+        }
     }
 
     private fun setUpActionBar() {
@@ -62,7 +84,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
-    fun updateNavigationUserDetails(user: User) {
+    fun updateNavigationUserDetails(user: User, readBoardsList: Boolean) {
         mUserName = user.name
         val navView: NavigationView = findViewById(R.id.nav_view)
         val headerView = navView.getHeaderView(0)
@@ -76,6 +98,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         val navUsername = headerView.findViewById<TextView>(R.id.tv_username)
         navUsername.text = user.name
+
+        if (readBoardsList){
+            showProgressDialog(resources.getString(R.string.please_wait))
+            FirestoreClass().getBoardList(this)
+        }
     }
 
     private fun toggleDrawer() {
