@@ -1,5 +1,6 @@
 package com.example.project_management.adapters
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.res.Resources
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.example.project_management.viewmodel.Task
 
 open class TaskListItemsAdapter(
     private val context: Context,
+    // taskList or list
     private var list: ArrayList<Task>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
@@ -63,7 +65,6 @@ open class TaskListItemsAdapter(
             // the check button next to input field
             holder.binding.ibDoneListName.setOnClickListener {
                 val listName = holder.binding.etTaskListName.text.toString()
-//                Toast.makeText(context, listName, Toast.LENGTH_SHORT).show()
 
                 if(listName.isNotEmpty()) {
                     if(context is TaskListActivity) {
@@ -73,8 +74,69 @@ open class TaskListItemsAdapter(
                     Toast.makeText(context, "Please Enter List Name.", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            //================ Editing list name =====================//
+            holder.binding.ibEditListName.setOnClickListener {
+                holder.binding.etEditTaskListName.setText(model.title)
+                holder.binding.llTitleView.visibility = View.GONE
+                holder.binding.cvEditTaskListName.visibility = View.VISIBLE
+            }
+
+            holder.binding.ibCloseEditableView.setOnClickListener {
+                holder.binding.llTitleView.visibility = View.VISIBLE
+                holder.binding.cvEditTaskListName.visibility = View.GONE
+            }
+
+            holder.binding.ibDoneEditListName.setOnClickListener {
+                val listName = holder.binding.etEditTaskListName.text.toString()
+
+                if(listName.isNotEmpty()) {
+                    if(context is TaskListActivity) {
+                        context.updateTaskList(position, listName, model)
+                    }
+                } else {
+                    Toast.makeText(context, "Please Enter a List Name.", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+
+            //================ Deleting list (taskList) =====================//
+            holder.binding.ibDeleteList.setOnClickListener {
+                alertDialogForDeleteList(position, model.title)
+            }
         }
     }
+
+    /**
+     * Method is used to show the Alert Dialog for deleting the task list.
+     */
+    private fun alertDialogForDeleteList(position: Int, title: String) {
+        val builder = AlertDialog.Builder(context)
+        //set title for alert dialog
+        builder.setTitle("Alert")
+        //set message for alert dialog
+        builder.setMessage("Are you sure you want to delete $title.")
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        //performing positive action
+        builder.setPositiveButton("Yes") { dialogInterface, which ->
+            dialogInterface.dismiss() // Dialog will be dismissed
+
+            if (context is TaskListActivity) {
+                context.deleteTaskList(position)
+            }
+        }
+
+        //performing negative action
+        builder.setNegativeButton("No") { dialogInterface, which ->
+            dialogInterface.dismiss() // Dialog will be dismissed
+        }
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false) // Will not allow user to cancel after clicking on remaining screen area.
+        alertDialog.show()  // show the dialog to UI
+    }
+    // END
 
 
 

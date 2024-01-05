@@ -80,7 +80,7 @@ class FirestoreClass {
             .document(board.documentId)
             .update(taskListHashMap)
             .addOnSuccessListener {
-                Log.e(activity.javaClass.simpleName, "TaskList updated successfully!")
+                Log.i(activity.javaClass.simpleName, "TaskList updated successfully!")
 
                 activity.addUpdateTaskListSuccess()
             }.addOnFailureListener {
