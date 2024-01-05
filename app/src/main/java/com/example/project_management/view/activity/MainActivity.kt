@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.project_management.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -68,10 +69,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         if (boardList.size > 0) {
             findViewById<TextView>(R.id.tv_no_boards_available).visibility = android.view.View.GONE
-            findViewById<RecyclerView>(R.id.rv_board_list).visibility =
+            findViewById<RecyclerView>(R.id.rv_boards_list).visibility =
                 android.view.View.VISIBLE
 
-            val rvBoardList = findViewById<RecyclerView>(R.id.rv_board_list)
+            val rvBoardList = findViewById<RecyclerView>(R.id.rv_boards_list)
             rvBoardList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@MainActivity)
             rvBoardList.setHasFixedSize(true)
 
@@ -87,7 +88,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             })
         } else{
             findViewById<TextView>(R.id.tv_no_boards_available).visibility = android.view.View.VISIBLE
-            findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_board_list).visibility =
+            findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_boards_list).visibility =
                 android.view.View.GONE
         }
     }
