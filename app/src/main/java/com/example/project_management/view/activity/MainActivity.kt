@@ -16,10 +16,9 @@ import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.project_management.adapters.BoardItemAdapter
+import com.example.project_management.view.adapters.BoardItemAdapter
 import com.example.project_management.utils.Constants
 import com.example.project_management.firebase.FirestoreClass
-import com.example.project_management.view.adapters.BoardItemsAdapter
 import com.example.project_management.viewmodel.Board
 import com.example.project_management.viewmodel.User
 import com.google.android.material.navigation.NavigationView
@@ -76,7 +75,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             rvBoardList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@MainActivity)
             rvBoardList.setHasFixedSize(true)
 
-            val adapter = com.example.project_management.adapters.BoardItemAdapter(this@MainActivity, boardList)
+            val adapter = BoardItemAdapter(this@MainActivity, boardList)
             rvBoardList.adapter = adapter
 
             adapter.setOnClickListener(object : BoardItemAdapter.OnClickListener {
@@ -103,7 +102,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             rvBoardsList.layoutManager = LinearLayoutManager(this)
             rvBoardsList.setHasFixedSize(true)
 
-            val adapter = BoardItemsAdapter(this, boardsList)
+            val adapter = BoardItemAdapter(this, boardsList)
             rvBoardsList.adapter = adapter
         } else {
             rvBoardsList.visibility = View.GONE
