@@ -5,15 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.project_management.R
 import com.example.project_management.viewmodel.Board
-import de.hdodenhof.circleimageview.CircleImageView
 
 open class BoardItemsAdapter(private val context: Context,
-                             private var list: AbstractList<Board>):
+                             private var list: ArrayList<Board>
+):
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     private var onClickListener: OnClickListener? = null
