@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_management.R
 import com.example.project_management.databinding.ItemTaskBinding
+import com.example.project_management.view.activity.TaskListActivity
 import com.example.project_management.viewmodel.Task
 
 open class TaskListItemsAdapter(
@@ -58,8 +60,18 @@ open class TaskListItemsAdapter(
                 holder.binding.cvAddTaskListName.visibility = View.GONE
             }
 
+            // the check button next to input field
             holder.binding.ibDoneListName.setOnClickListener {
-                // TODO create entry in DB and display the task list
+                val listName = holder.binding.etTaskListName.text.toString()
+//                Toast.makeText(context, listName, Toast.LENGTH_SHORT).show()
+
+                if(listName.isNotEmpty()) {
+                    if(context is TaskListActivity) {
+                        context.createTaskList(listName)
+                    }
+                } else {
+                    Toast.makeText(context, "Please Enter List Name.", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

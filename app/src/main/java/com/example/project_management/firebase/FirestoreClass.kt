@@ -70,8 +70,9 @@ class FirestoreClass {
             }
     }
 
-    // add(update) board's tasklist field
+    // function to add(update) board's taskList field in board document
     fun addUpdateTaskList(activity: TaskListActivity, board: Board) {
+
         val taskListHashMap = HashMap<String, Any>()
         taskListHashMap[Constants.TASK_LIST] = board.taskList
 

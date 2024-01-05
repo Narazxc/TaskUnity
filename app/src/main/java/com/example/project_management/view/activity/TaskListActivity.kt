@@ -63,9 +63,29 @@ class TaskListActivity : BaseActivity() {
 
     }
 
-    // function to add or update a task list
+    // function to re-fetch board detail after add(update) a taskList field in board successfully
     fun addUpdateTaskListSuccess() {
+        hideProgressDialog()
+
+        // after success re-fetch board detail again
+        // hence the two loading spinners
+        // since showing one for both process might be too long
+        showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().getBoardDetails(this, mBoardDetails.documentId)
+    }
+
+
+    fun createTaskList(taskListName: String) {
+        val task = Task(taskListName, FirestoreClass().getCurrentUserId())
+
+        // add tasklist to board
+        mBoardDetails.taskList.add(0, task)
+
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
+
+        showProgressDialog(resources.getString(R.string.please_wait))
+
+        FirestoreClass().addUpdateTaskList(this, mBoardDetails)
     }
 
 }
