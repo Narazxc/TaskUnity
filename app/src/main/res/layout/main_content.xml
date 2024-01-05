@@ -34,5 +34,4 @@
             android:textSize="@dimen/no_boards_available_text_size"/>
 
     </androidx.cardview.widget.CardView>
-
 </LinearLayout>
