@@ -14,6 +14,7 @@ import com.example.project_management.viewmodel.Board
 import com.example.project_management.viewmodel.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 
 class FirestoreClass {
