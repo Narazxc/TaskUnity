@@ -52,6 +52,7 @@ open class TaskListItemsAdapter(
             }
 
             holder.binding.tvTaskListTitle.text = model.title
+
             holder.binding.tvAddTaskList.setOnClickListener {
                 holder.binding.tvAddTaskList.visibility = View.GONE
                 holder.binding.cvAddTaskListName.visibility = View.VISIBLE
@@ -104,6 +105,32 @@ open class TaskListItemsAdapter(
             holder.binding.ibDeleteList.setOnClickListener {
                 alertDialogForDeleteList(position, model.title)
             }
+
+
+            //======================= Card =============================//
+            holder.binding.tvAddCard.setOnClickListener {
+                holder.binding.tvAddCard.visibility = View.GONE
+                holder.binding.cvAddCard.visibility = View.VISIBLE
+            }
+
+            holder.binding.ibCloseCardName.setOnClickListener {
+                holder.binding.tvAddCard.visibility = View.VISIBLE
+                holder.binding.cvAddCard.visibility = View.GONE
+            }
+
+            //================ Create Card ==============//
+            holder.binding.ibDoneCardName.setOnClickListener {
+                val cardName = holder.binding.etCardName.text.toString()
+
+                if(cardName.isNotEmpty()) {
+                    if(context is TaskListActivity) {
+                        context.addCardToTaskList(position, cardName)
+                    }
+                } else {
+                    Toast.makeText(context, "Please Enter List Name.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
         }
     }
 

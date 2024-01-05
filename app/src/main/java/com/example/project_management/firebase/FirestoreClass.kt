@@ -182,7 +182,7 @@ class FirestoreClass {
         if (currentUser != null) {
             currentUserId = currentUser.uid
         } else {
-            Log.e("FirestoreClass", "User is null")
+            Log.e("FireStoreClass", "User is null")
         }
         return currentUserId
     }

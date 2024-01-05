@@ -10,6 +10,7 @@ import com.example.project_management.databinding.ActivityTaskListBinding
 import com.example.project_management.firebase.FirestoreClass
 import com.example.project_management.utils.Constants
 import com.example.project_management.viewmodel.Board
+import com.example.project_management.viewmodel.Card
 import com.example.project_management.viewmodel.Task
 import com.google.api.Distribution.BucketOptions.Linear
 
@@ -105,6 +106,34 @@ class TaskListActivity : BaseActivity() {
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().addUpdateTaskList(this, mBoardDetails)
 
+    }
+
+    fun addCardToTaskList(position: Int, cardName: String) {
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
+
+        val cardAssignedUsersList: ArrayList<String> = ArrayList()
+        cardAssignedUsersList.add(FirestoreClass().getCurrentUserId())
+
+        // create card
+        val card = Card(cardName, FirestoreClass().getCurrentUserId(), cardAssignedUsersList)
+
+        // prepare card list
+        val cardList = mBoardDetails.taskList[position].cards
+        cardList.add(card)
+
+        // update the task to get the latest cardList
+        val task = Task(
+            mBoardDetails.taskList[position].title,
+            mBoardDetails.taskList[position].createdBy,
+            cardList
+        )
+
+        // board -> taskLists -> cards (cardLists)
+        // board > tasks > cards
+        mBoardDetails.taskList[position] = task
+
+        showProgressDialog(resources.getString(R.string.please_wait))
+        FirestoreClass().addUpdateTaskList(this, mBoardDetails)
     }
 
 }
