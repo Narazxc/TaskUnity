@@ -1,7 +1,10 @@
 package com.example.project_management.view.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_management.R
@@ -33,6 +36,24 @@ class TaskListActivity : BaseActivity() {
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().getBoardDetails(this, boardDocumentId)
     }
+
+    // add option menu to TaskList activity
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_members, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    // add click listener to option menu
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_members -> {
+                startActivity(Intent(this, MembersActivity::class.java))
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
 
     private fun setupActionBar() {
         setSupportActionBar(binding.toolbarTaskListActivity)
