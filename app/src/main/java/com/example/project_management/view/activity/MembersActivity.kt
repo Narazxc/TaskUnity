@@ -2,12 +2,17 @@ package com.example.project_management.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_management.R
+import com.example.project_management.adapters.MemberListItemsAdapter
 import com.example.project_management.databinding.ActivityMembersBinding
+import com.example.project_management.firebase.FirestoreClass
 import com.example.project_management.utils.Constants
 import com.example.project_management.viewmodel.Board
+import com.example.project_management.viewmodel.User
+import com.google.api.Distribution.BucketOptions.Linear
 
-class MembersActivity : AppCompatActivity() {
+class MembersActivity : BaseActivity() {
 
     lateinit var binding: ActivityMembersBinding
 
@@ -25,6 +30,24 @@ class MembersActivity : AppCompatActivity() {
         }
 
         setupActionBar()
+
+        // should be no error since there is always one assignedTo member (the user/board creator)
+        showProgressDialog(resources.getString(R.string.please_wait))
+        FirestoreClass().getAssignedMembersListDetails(this, mBoardDetails.assignedTo)
+    }
+
+    // let this activity knows it should use MemberListItemsAdapter
+    fun setUpMembersList(list: ArrayList<User>) {
+        hideProgressDialog()
+
+        // set layout manager
+        binding.rvMembersList.layoutManager = LinearLayoutManager(this)
+        binding.rvMembersList.setHasFixedSize(true)
+
+        val adapter = MemberListItemsAdapter(this, list)
+
+        // assign adapter to recyclerView
+        binding.rvMembersList.adapter = adapter
     }
 
     private fun setupActionBar() {
