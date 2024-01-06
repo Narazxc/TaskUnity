@@ -47,4 +47,12 @@
 
     <string name="no_boards_available">No Boards are Available !!!</string>
 
+    <!-- Members activity -->
+    <string name="members">Members</string>
+
+    <string name="add_member">Add Member</string>
+    <string name="cancel">CANCEL</string>
+    <string name="add">ADD</string>
+    <string name="search_member">Add Member</string>
+
 </resources>
