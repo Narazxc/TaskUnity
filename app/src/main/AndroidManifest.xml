@@ -21,6 +21,11 @@
         android:theme="@style/Theme.Project_Management"
         tools:targetApi="31">
         <activity
+            android:name=".view.activity.MembersActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.No_Action_Bar"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.TaskListActivity"
             android:exported="false"
             android:screenOrientation="portrait"

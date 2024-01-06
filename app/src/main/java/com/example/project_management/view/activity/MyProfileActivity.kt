@@ -32,11 +32,6 @@ class MyProfileActivity : BaseActivity() {
     // using view binding will automatically convert snake case naming to camel case
     lateinit var binding: ActivityMyProfileBinding
 
-    // define some permission constants
-    companion object {
-        private const val READ_STORAGE_PERMISSION_CODE = 1
-        private const val PICK_IMAGE_REQUEST_CODE = 2
-    }
 
     private var mSelectedImageFileUri: Uri? = null
     private lateinit var mUserDetails: User
@@ -49,6 +44,8 @@ class MyProfileActivity : BaseActivity() {
         binding = ActivityMyProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupActionBar()
+
         FirestoreClass().loadUserData(this)
 
 
@@ -58,13 +55,13 @@ class MyProfileActivity : BaseActivity() {
                     this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED) {
 
-                showImageChooser()
+                Constants.showImageChooser(this)
 
             } else {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    READ_STORAGE_PERMISSION_CODE
+                    Constants.READ_STORAGE_PERMISSION_CODE
                 )
             }
         }
@@ -88,10 +85,10 @@ class MyProfileActivity : BaseActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == READ_STORAGE_PERMISSION_CODE) {
+        if(requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
             if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                showImageChooser()
+                Constants.showImageChooser(this)
             }
         } else {
             Toast.makeText(this, "Oops, you just denied the permission for storage. You can allow it from settings.",
@@ -100,15 +97,11 @@ class MyProfileActivity : BaseActivity() {
         }
     }
 
-    private fun showImageChooser() {
-        var galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST_CODE)
-    }
 
     // do something after getting the activity result
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE_REQUEST_CODE && data!!.data != null) {
+        if(resultCode == Activity.RESULT_OK && requestCode == Constants.PICK_IMAGE_REQUEST_CODE && data!!.data != null) {
 
             // data.data returns Uri
             mSelectedImageFileUri = data.data
@@ -126,6 +119,24 @@ class MyProfileActivity : BaseActivity() {
             }
 
         }
+    }
+
+
+    /**
+     * A function to setup action bar
+     */
+    private fun setupActionBar() {
+
+        setSupportActionBar(binding.toolbarMyProfileActivity)
+
+        val actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_white_color_back_24dp)
+            actionBar.title = resources.getString(R.string.my_profile_title)
+        }
+
+        binding.toolbarMyProfileActivity.setNavigationOnClickListener { onBackPressed() }
     }
 
 
@@ -186,7 +197,7 @@ class MyProfileActivity : BaseActivity() {
 
             val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
                 "USER_IMAGE" + System.currentTimeMillis()
-                        + "." + getFileExtension(mSelectedImageFileUri))
+                        + "." + Constants.getFileExtension(this, mSelectedImageFileUri))
 
                 // upload image to firebase storage
                 sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener {
@@ -220,10 +231,6 @@ class MyProfileActivity : BaseActivity() {
     }
 
 
-    // function to get file extension base on uri
-    private fun getFileExtension(uri: Uri?): String? {
-        return MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri!!))
-    }
 
     fun profileUpdateSuccess() {
         hideProgressDialog()

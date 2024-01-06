@@ -3,6 +3,7 @@ package com.example.project_management.view.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -161,13 +162,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if ((requestCode == MY_PROFILE_REQUEST_CODE) && (resultCode == RESULT_OK)){
+        if ( resultCode == RESULT_OK && requestCode == MY_PROFILE_REQUEST_CODE ){
             FirestoreClass().loadUserData(this)
-        } else if(requestCode == CREATE_BOARD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        } else if ( resultCode == Activity.RESULT_OK && requestCode == CREATE_BOARD_REQUEST_CODE ) {
             FirestoreClass().getBoardList(this)
-        }
-        else {
-            Toast.makeText(this, "Profile update failed", Toast.LENGTH_LONG).show()
+        } else {
+//            Toast.makeText(this, "Profile update failed", Toast.LENGTH_LONG).show()
+            Log.e("Cancelled", "Cancelled")
         }
     }
 
