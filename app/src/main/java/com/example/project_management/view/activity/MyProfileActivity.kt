@@ -44,6 +44,8 @@ class MyProfileActivity : BaseActivity() {
         binding = ActivityMyProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupActionBar()
+
         FirestoreClass().loadUserData(this)
 
 
@@ -117,6 +119,24 @@ class MyProfileActivity : BaseActivity() {
             }
 
         }
+    }
+
+
+    /**
+     * A function to setup action bar
+     */
+    private fun setupActionBar() {
+
+        setSupportActionBar(binding.toolbarMyProfileActivity)
+
+        val actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_white_color_back_24dp)
+            actionBar.title = resources.getString(R.string.my_profile_title)
+        }
+
+        binding.toolbarMyProfileActivity.setNavigationOnClickListener { onBackPressed() }
     }
 
 

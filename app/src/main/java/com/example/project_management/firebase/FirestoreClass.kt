@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.example.project_management.utils.Constants
 import com.example.project_management.view.activity.CreateBoardActivity
 import com.example.project_management.view.activity.MainActivity
+import com.example.project_management.view.activity.MembersActivity
 import com.example.project_management.view.activity.MyProfileActivity
 import com.example.project_management.view.activity.SignInActivity
 import com.example.project_management.view.activity.SignUpActivity
@@ -185,5 +186,33 @@ class FirestoreClass {
             Log.e("FireStoreClass", "User is null")
         }
         return currentUserId
+    }
+
+    fun getAssignedMembersListDetails(activity: MembersActivity, assignTo: ArrayList<String>) {
+        mFireStore.collection(Constants.USERS)
+            .whereIn(Constants.ID, assignTo)
+            .get()
+            .addOnSuccessListener {
+                document ->
+                Log.e(activity.javaClass.simpleName, document.documents.toString())
+
+                val userList: ArrayList<User> = ArrayList()
+
+                for(i in document.documents) {
+                    val user = i.toObject(User::class.java)!!
+                    userList.add(user)
+                }
+
+                activity.setUpMembersList(userList)
+
+            }.addOnFailureListener {
+                e ->
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while loading a board.",
+                    e
+                )
+            }
     }
 }
