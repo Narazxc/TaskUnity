@@ -1,7 +1,12 @@
 package com.example.project_management.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Dialog
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_management.R
 import com.example.project_management.adapters.MemberListItemsAdapter
@@ -10,7 +15,7 @@ import com.example.project_management.firebase.FirestoreClass
 import com.example.project_management.utils.Constants
 import com.example.project_management.viewmodel.Board
 import com.example.project_management.viewmodel.User
-import com.google.api.Distribution.BucketOptions.Linear
+
 
 class MembersActivity : BaseActivity() {
 
@@ -62,5 +67,56 @@ class MembersActivity : BaseActivity() {
         }
 
         binding.toolbarMembersActivity.setNavigationOnClickListener { onBackPressed() }
+    }
+
+    // whenever you add menu, need to create two function
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_add_member, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_add_member -> {
+
+                dialogSearchMember()
+
+                // return true because function expect Boolean
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun dialogSearchMember() {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_search_member)
+
+        // Find views within the dialog_search_member layout
+        val tvAdd = dialog.findViewById<TextView>(R.id.tv_add)
+        val tvCancel = dialog.findViewById<TextView>(R.id.tv_cancel)
+        val etEmailSearchMember = dialog.findViewById<AppCompatEditText>(R.id.et_email_search_member)
+
+
+        tvAdd.setOnClickListener {
+            val email = etEmailSearchMember.text.toString()
+
+            if(email.isNotEmpty()) {
+                dialog.dismiss()
+                // TODO implement adding member logic
+            } else {
+                Toast.makeText(
+                    this@MembersActivity,
+                    "Please enter members email address",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        tvCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+
+        dialog.show()
     }
 }
