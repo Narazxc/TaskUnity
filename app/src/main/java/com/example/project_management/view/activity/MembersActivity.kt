@@ -21,8 +21,8 @@ class MembersActivity : BaseActivity() {
 
     lateinit var binding: ActivityMembersBinding
 
-    lateinit var mBoardDetails: Board
-
+    private lateinit var mBoardDetails: Board
+    private lateinit var mAssignedMembersList: ArrayList<User>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +43,7 @@ class MembersActivity : BaseActivity() {
 
     // let this activity knows it should use MemberListItemsAdapter
     fun setUpMembersList(list: ArrayList<User>) {
+        mAssignedMembersList = list
         hideProgressDialog()
 
         // set layout manager
@@ -53,6 +54,11 @@ class MembersActivity : BaseActivity() {
 
         // assign adapter to recyclerView
         binding.rvMembersList.adapter = adapter
+    }
+
+    fun memberDetails(user: User){
+        mBoardDetails.assignedTo.add(user.id)
+        FirestoreClass().assignMemberToBoard(this, mBoardDetails, user)
     }
 
     private fun setupActionBar() {
@@ -102,7 +108,8 @@ class MembersActivity : BaseActivity() {
 
             if(email.isNotEmpty()) {
                 dialog.dismiss()
-                // TODO implement adding member logic
+                showProgressDialog(resources.getString(R.string.please_wait))
+                FirestoreClass().getMemberDetails(this, email)
             } else {
                 Toast.makeText(
                     this@MembersActivity,
@@ -118,5 +125,10 @@ class MembersActivity : BaseActivity() {
 
 
         dialog.show()
+    }
+    fun memberAssignSuccess(user: User){
+        hideProgressDialog()
+        mAssignedMembersList.add(user)
+        setUpMembersList(mAssignedMembersList)
     }
 }
