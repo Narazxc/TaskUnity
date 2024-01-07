@@ -48,6 +48,9 @@ class TaskListActivity : BaseActivity() {
         }
     }
 
+    fun cardDetails(taskListPosition: Int, cardPosition: Int){
+        startActivity(Intent(this, CardDetailsActivity::class.java))
+    }
     // add option menu to TaskList activity
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_members, menu)

@@ -33,6 +33,11 @@ class CardListItemsAdapter (
         if(holder is MyViewHolder) {
             holder.binding.tvCardName.text = model.name
 
+            holder.itemView.setOnClickListener {
+                if (onClickListener != null){
+                    onClickListener!!.onClick(position)
+                }
+            }
         }
     }
 
@@ -42,7 +47,7 @@ class CardListItemsAdapter (
     }
 
     interface OnClickListener {
-        fun onClick(position: Int, model: Board)
+        fun onClick(position: Int)
     }
 
 
