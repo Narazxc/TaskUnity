@@ -1,5 +1,6 @@
 package com.example.project_management.view.activity
 
+import android.app.Activity
 import android.app.Dialog
 import android.os.Bundle
 import android.view.Menu
@@ -23,6 +24,7 @@ class MembersActivity : BaseActivity() {
 
     private lateinit var mBoardDetails: Board
     private lateinit var mAssignedMembersList: ArrayList<User>
+    private var anyChangesMad: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,9 +128,17 @@ class MembersActivity : BaseActivity() {
 
         dialog.show()
     }
+
+    override fun onBackPressed(){
+        if (anyChangesMad){
+            setResult(Activity.RESULT_OK)
+        }
+        super.onBackPressed()
+    }
     fun memberAssignSuccess(user: User){
         hideProgressDialog()
         mAssignedMembersList.add(user)
+        anyChangesMad = true
         setUpMembersList(mAssignedMembersList)
     }
 }
