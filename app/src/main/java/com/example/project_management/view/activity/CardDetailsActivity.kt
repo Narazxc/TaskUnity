@@ -17,9 +17,13 @@ class CardDetailsActivity : AppCompatActivity() {
     private var mCardPosition = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_card_details)
+        //setContentView(R.layout.activity_card_details)
+        binding = ActivityCardDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         getIntentData()
         setupActionBar()
+
         binding.etNameCardDetails.setText(mBoardDetails
             .taskList[mTaskListPosition]
             .cards[mCardPosition].name)
