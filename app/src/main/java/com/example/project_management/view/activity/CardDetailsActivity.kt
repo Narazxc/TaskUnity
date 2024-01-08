@@ -2,6 +2,7 @@ package com.example.project_management.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import com.example.project_management.R
 import com.example.project_management.databinding.ActivityCardDetailsBinding
 import com.example.project_management.databinding.ActivityMembersBinding
@@ -19,7 +20,11 @@ class CardDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_card_details)
         getIntentData()
         setupActionBar()
-
+        binding.etNameCardDetails.setText(mBoardDetails
+            .taskList[mTaskListPosition]
+            .cards[mCardPosition].name)
+        binding.etNameCardDetails.setSelection(binding
+            .etNameCardDetails.text.toString().length)
     }
 
     private fun setupActionBar() {
@@ -33,12 +38,20 @@ class CardDetailsActivity : AppCompatActivity() {
         binding.toolbarCardDetailsActivity.setNavigationOnClickListener { onBackPressed() }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_delete_card, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     private fun getIntentData() {
-        val extras = intent.extras
-        if (extras != null) {
-            mBoardDetails = extras.getParcelable(Constants.BOARD_DETAIL) ?: Board()
-            mTaskListPosition = extras.getInt(Constants.TASK_LIST_ITEM_POSITION, -1)
-            mCardPosition = extras.getInt(Constants.CARD_LIST_ITEM_POSITION, -1)
+        if (intent.hasExtra(Constants.BOARD_DETAIL)){
+            mBoardDetails = intent.getParcelableExtra(Constants.BOARD_DETAIL)!!
+        }
+        if (intent.hasExtra(Constants.TASK_LIST_ITEM_POSITION)){
+            mTaskListPosition = intent.getIntExtra(Constants.TASK_LIST_ITEM_POSITION, -1)
+        }
+        if (intent.hasExtra(Constants.CARD_LIST_ITEM_POSITION)){
+            mCardPosition = intent.getIntExtra(Constants.CARD_LIST_ITEM_POSITION, -1)
         }
     }
 }
