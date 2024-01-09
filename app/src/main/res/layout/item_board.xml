@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/item_board_content_marginBottom"
     android:background="?attr/selectableItemBackground"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    android:layout_marginBottom="@dimen/item_board_content_marginBottom">
+ 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,11 +18,11 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_board_image"
             android:layout_width="@dimen/item_board_image_size"
-            android:layout_height="@dimen/item_board_image_size"
+            android:layout_height="@dimen/board_image_size"
             android:contentDescription="@string/image_contentDescription"
             android:src="@drawable/ic_board_place_holder"
             app:civ_border_color="@color/primary_text_color"
-            app:civ_border_width="@dimen/item_board_image_circular_border_width" />
+            app:civ_border_width="@dimen/item_board_image_circular_border_width"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/primary_text_color"
                 android:textSize="@dimen/item_board_name_text_size"
-                tools:text="Board Name" />
+                tools:text="Board Name"/>
 
             <TextView
                 android:id="@+id/tv_created_by"
@@ -44,14 +44,12 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/secondary_text_color"
                 android:textSize="@dimen/item_board_created_by_text_size"
-                tools:text="Created By" />
+                tools:text="Created by"/>
         </LinearLayout>
     </LinearLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_board_divider_height"
         android:layout_marginTop="@dimen/item_board_divider_marginTop"
         android:background="@color/divider_color" />
-
 </LinearLayout>
