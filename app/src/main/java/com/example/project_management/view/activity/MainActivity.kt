@@ -63,36 +63,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         FirestoreClass().loadUserData(this@MainActivity, true)
     }
 
-    fun populateBoardListToUI(boardList: ArrayList<Board>) {
-
-        hideProgressDialog()
-
-        if (boardList.size > 0) {
-            findViewById<TextView>(R.id.tv_no_boards_available).visibility = android.view.View.GONE
-            findViewById<RecyclerView>(R.id.rv_boards_list).visibility =
-                android.view.View.VISIBLE
-
-            val rvBoardList = findViewById<RecyclerView>(R.id.rv_boards_list)
-            rvBoardList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@MainActivity)
-            rvBoardList.setHasFixedSize(true)
-
-            val adapter = BoardItemAdapter(this@MainActivity, boardList)
-            rvBoardList.adapter = adapter
-
-            adapter.setOnClickListener(object : BoardItemAdapter.OnClickListener {
-                override fun onClick(position: Int, model: com.example.project_management.viewmodel.Board) {
-                    val intent = Intent(this@MainActivity, TaskListActivity::class.java)
-                    intent.putExtra(Constants.DOCUMENT_ID, model.documentId)
-                    startActivity(intent)
-                }
-            })
-        } else{
-            findViewById<TextView>(R.id.tv_no_boards_available).visibility = android.view.View.VISIBLE
-            findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_boards_list).visibility =
-                android.view.View.GONE
-        }
-    }
-
     fun populateBoardsListToUI(boardsList: ArrayList<Board>) {
         hideProgressDialog()
 
@@ -105,6 +75,16 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
             val adapter = BoardItemAdapter(this, boardsList)
             rvBoardsList.adapter = adapter
+
+            // Passing doc to TaskListActivity to via intent
+            adapter.setOnClickListener(object : BoardItemAdapter.OnClickListener {
+                override fun onClick(position: Int, model: Board) {
+                    val intent = Intent(this@MainActivity, TaskListActivity::class.java)
+                    intent.putExtra(Constants.DOCUMENT_ID, model.documentId)
+                    startActivity(intent)
+                }
+            })
+
         } else {
             rvBoardsList.visibility = View.GONE
             tvNoBoardsAvailable.visibility = View.VISIBLE
@@ -165,7 +145,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         if ( resultCode == RESULT_OK && requestCode == MY_PROFILE_REQUEST_CODE ){
             FirestoreClass().loadUserData(this)
         } else if ( resultCode == Activity.RESULT_OK && requestCode == CREATE_BOARD_REQUEST_CODE ) {
-            FirestoreClass().getBoardList(this)
+            FirestoreClass().getBoardsList(this)
         } else {
 //            Toast.makeText(this, "Profile update failed", Toast.LENGTH_LONG).show()
             Log.e("Cancelled", "Cancelled")

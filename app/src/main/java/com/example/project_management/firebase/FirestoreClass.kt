@@ -34,25 +34,7 @@ class FirestoreClass {
                 Log.e(activity.javaClass.simpleName, "Error while registering the user", e)
             }
     }
-    fun getBoardsList(activity: MainActivity) {
-        mFireStore.collection(Constants.BOARDS)
-            .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserId())
-            .get()
-            .addOnSuccessListener {
-                document ->
-                Log.i(activity.javaClass.simpleName, document.documents.toString())
-                val boardList: ArrayList<Board> = ArrayList()
-                for (i in document.documents){
-                    val board = i.toObject(Board::class.java)!!
-                    board.documentId = i.id
-                    boardList.add(board)
-                }
-                activity.populateBoardsListToUI(boardList)
-            }.addOnFailureListener {e ->
-                activity.hideProgressDialog()
-                Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
-            }
-    }
+
 
     fun getBoardDetails(activity: TaskListActivity, documentId: String) {
         mFireStore.collection(Constants.BOARDS)
@@ -71,7 +53,7 @@ class FirestoreClass {
     }
 
     // A function to get the list of boards from the cloud firestore
-    fun getBoardList(activity: MainActivity) {
+    fun getBoardsList(activity: MainActivity) {
         mFireStore.collection(Constants.BOARDS)
             .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserId())
             .get()
@@ -83,7 +65,7 @@ class FirestoreClass {
                     board.documentId = i.id
                     boardList.add(board)
                 }
-                activity.populateBoardListToUI(boardList)
+                activity.populateBoardsListToUI(boardList)
             }.addOnFailureListener { e ->
                 activity.hideProgressDialog()
                 Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
