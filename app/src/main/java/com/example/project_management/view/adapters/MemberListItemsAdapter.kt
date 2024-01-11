@@ -7,11 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.project_management.R
 import com.example.project_management.databinding.ItemMemberBinding
+import com.example.project_management.utils.Constants
 import com.example.project_management.viewmodel.User
 
 class MemberListItemsAdapter (
     private val context: Context,
-    private var list: ArrayList<User>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var list: ArrayList<User>
+): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var onClickListener: OnClickListener? = null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -38,11 +42,39 @@ class MemberListItemsAdapter (
             holder.binding.tvMemberName.text = model.name
             holder.binding.tvMemberEmail.text = model.email
 
+            if(model.selected) {
+                holder.binding.ivSelectedMember.visibility = ViewGroup.VISIBLE
+            } else {
+                holder.binding.ivSelectedMember.visibility = ViewGroup.GONE
+            }
+
+            holder.itemView.setOnClickListener() {
+                if(onClickListener != null) {
+                    if(model.selected) {
+                        onClickListener!!.onClick(position, model, Constants.UN_SELECT)
+                    } else {
+                        onClickListener!!.onClick(position, model, Constants.SELECT)
+                    }
+                }
+            }
+
         }
     }
 
+    /**
+     * A function for OnClickListener where the Interface is the expected parameter..
+     */
+    fun setOnClickListener(onClickListener: OnClickListener) {
+        this.onClickListener = onClickListener
+    }
+
+    /**
+     * An interface for onclick items.
+     */
+    interface OnClickListener {
+        fun onClick(position: Int, user: User, action: String)
+    }
+
     class MyViewHolder(val binding: ItemMemberBinding): RecyclerView.ViewHolder(binding.root)
-
-
 
 }
