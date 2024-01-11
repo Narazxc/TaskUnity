@@ -31,6 +31,15 @@ class CardListItemsAdapter (
         val model = list[position]
 
         if(holder is MyViewHolder) {
+
+            if (model.labelColor.isNotEmpty()){
+                holder.binding.viewLabelColor.visibility = ViewGroup.VISIBLE
+                holder.binding.viewLabelColor.setBackgroundColor(
+                    android.graphics.Color.parseColor(model.labelColor))
+            } else {
+                holder.binding.viewLabelColor.visibility = ViewGroup.GONE
+            }
+
             holder.binding.tvCardName.text = model.name
 
             holder.itemView.setOnClickListener {
