@@ -12,13 +12,15 @@ data class Card (
     constructor(source: Parcel) : this(
         source.readString()!!,
         source.readString()!!,
-        source.createStringArrayList()!!
+        source.createStringArrayList()!!,
+        source.readString()!!
     )
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest){
         writeString(name)
         writeString(createdBy)
         writeStringList(assignedTo)
+        writeString(labelColor)
     }
 
     override fun describeContents(): Int {

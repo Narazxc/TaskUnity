@@ -39,6 +39,14 @@ class CardDetailsActivity : BaseActivity() {
         binding.etNameCardDetails.setSelection(binding
             .etNameCardDetails.text.toString().length)
 
+        mSelectedColor = mBoardDetails
+            .taskList[mTaskListPosition]
+            .cards[mCardPosition].labelColor
+
+        if (mSelectedColor.isNotEmpty()) {
+            setColor()
+        }
+
         binding.btnUpdateCardDetails.setOnClickListener {
             if (binding.etNameCardDetails.text.toString().isNotEmpty()) {
                 updateCardDetails()
