@@ -5,8 +5,8 @@ import android.os.Parcelable
 
 data class Card (
     val name: String = "",
-    val createBy: String = "",
-    val assignedTo: ArrayList<String> = ArrayList(),
+    val createdBy: String = "",
+    val assignedTo: ArrayList<String> = ArrayList()
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString()!!,
@@ -16,7 +16,7 @@ data class Card (
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest){
         writeString(name)
-        writeString(createBy)
+        writeString(createdBy)
         writeStringList(assignedTo)
     }
 

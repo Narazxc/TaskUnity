@@ -4,6 +4,7 @@ import android.app.Activity
 import android.util.Log
 import android.widget.Toast
 import com.example.project_management.utils.Constants
+import com.example.project_management.view.activity.CardDetailsActivity
 import com.example.project_management.view.activity.CreateBoardActivity
 import com.example.project_management.view.activity.MainActivity
 import com.example.project_management.view.activity.MembersActivity
@@ -73,7 +74,7 @@ class FirestoreClass {
     }
 
     // function to add(update) board's taskList field in board document
-    fun addUpdateTaskList(activity: TaskListActivity, board: Board) {
+    fun addUpdateTaskList(activity: Activity, board: Board) {
 
         val taskListHashMap = HashMap<String, Any>()
         taskListHashMap[Constants.TASK_LIST] = board.taskList
@@ -83,11 +84,18 @@ class FirestoreClass {
             .update(taskListHashMap)
             .addOnSuccessListener {
                 Log.i(activity.javaClass.simpleName, "TaskList updated successfully!")
-
-                activity.addUpdateTaskListSuccess()
+                if (activity is TaskListActivity) {
+                    activity.addUpdateTaskListSuccess()
+                } else if (activity is CardDetailsActivity) {
+                    activity.addUpdateTaskListSuccess()
+                }
             }.addOnFailureListener {
                 exception ->
-                activity.hideProgressDialog()
+                if (activity is TaskListActivity) {
+                    activity.hideProgressDialog()
+                } else if (activity is CardDetailsActivity) {
+                    activity.hideProgressDialog()
+                }
                 Log.e(activity.javaClass.simpleName, "Error while creating a board", exception)
             }
     }
