@@ -1,0 +1,56 @@
+name: Build Android APK on Tag
+
+on:
+  push:
+    tags:
+      - 'uat-*'
+      - 'prd-*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: ghcr.io/leapkh/android-ci:1.0.1
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/wrapper
+            ~/.gradle/caches
+          key: TaskUnity
+
+      - name: Build APK
+        run: |
+          tag=$GITHUB_REF
+          build_type='release'
+          if [[ $tag == 'refs/tags/uat-'* ]]; then
+            flavor='uat'
+          elif [[ $tag == 'refs/tags/prd-'* ]]; then
+            flavor='prd'
+          else
+            echo "Invalid tag format. Exiting..."
+            exit 1
+          fi
+          ./gradlew "assemble${flavor}${build_type}"
+          apkDir="app/build/outputs/apk/${flavor}/${build_type}"
+          apkMetaFile="$apkDir/output-metadata.json"
+          apkFile=$(cat $apkMetaFile | jq -r '.elements[0].outputFile')
+          cp "$apkDir/$apkFile" "TaskUnity.apk"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: TaskUnity
+          path: TaskUnity.apk
