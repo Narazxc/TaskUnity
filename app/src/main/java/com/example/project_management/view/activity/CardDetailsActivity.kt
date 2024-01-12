@@ -10,10 +10,12 @@ import com.example.project_management.R
 import com.example.project_management.databinding.ActivityCardDetailsBinding
 import com.example.project_management.databinding.ActivityMembersBinding
 import com.example.project_management.dialogs.LabelColorListDialog
+import com.example.project_management.dialogs.MembersListDialog
 import com.example.project_management.firebase.FirestoreClass
 import com.example.project_management.utils.Constants
 import com.example.project_management.viewmodel.Board
 import com.example.project_management.viewmodel.Card
+import com.example.project_management.viewmodel.User
 
 class CardDetailsActivity : BaseActivity() {
 
@@ -22,6 +24,7 @@ class CardDetailsActivity : BaseActivity() {
     private var mTaskListPosition = -1
     private var mCardPosition = -1
     private var mSelectedColor = ""
+    private lateinit var mMembersDetailList: ArrayList<User>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +59,9 @@ class CardDetailsActivity : BaseActivity() {
         }
         binding.tvSelectLabelColor.setOnClickListener {
             labelColorsListDialog()
+        }
+        binding.tvSelectMembers.setOnClickListener {
+            memberListDialog()
         }
     }
 
@@ -120,6 +126,44 @@ class CardDetailsActivity : BaseActivity() {
         if (intent.hasExtra(Constants.CARD_LIST_ITEM_POSITION)){
             mCardPosition = intent.getIntExtra(Constants.CARD_LIST_ITEM_POSITION, -1)
         }
+        if (intent.hasExtra(Constants.BOARD_MEMBERS_LIST)){
+            mMembersDetailList = intent.getParcelableArrayListExtra(Constants.BOARD_MEMBERS_LIST)!!
+        }
+    }
+
+    private fun memberListDialog(){
+        var cardAssignedMembersList = mBoardDetails
+            .taskList[mTaskListPosition]
+            .cards[mCardPosition].assignedTo
+
+        // we check do we even have members assigned to card or not.
+        if (cardAssignedMembersList.size > 0){
+            // Go through all the member in the list.
+            for (i in mMembersDetailList.indices){
+                // Here we are checking that, if the id of member exist in cardAssignedMembersList, then we will update the member's assignedTo property to true.
+                for (j in cardAssignedMembersList){
+                    if (mMembersDetailList[i].id == j){
+                        mMembersDetailList[i].selected = true
+                    }
+                }
+            }
+        }else{
+            // If there are no members assigned to a card then we will display all the available members list to select from.
+            for (i in mMembersDetailList.indices){
+                mMembersDetailList[i].selected = false
+            }
+        }
+
+        val listDialog = object : MembersListDialog(
+            this,
+            mMembersDetailList,
+            resources.getString(R.string.str_select_member)
+        ){
+            override fun onItemSelected(user: User, action: String) {
+                    // TODO implement later
+            }
+        }
+        listDialog.show()
     }
 
     private fun updateCardDetails() {
