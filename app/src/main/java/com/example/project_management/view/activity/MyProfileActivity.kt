@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -190,6 +191,7 @@ class MyProfileActivity : BaseActivity() {
 
 
 
+    @SuppressLint("SuspiciousIndentation")
     private fun uploadUserImage() {
         showProgressDialog(resources.getString(R.string.please_wait))
 

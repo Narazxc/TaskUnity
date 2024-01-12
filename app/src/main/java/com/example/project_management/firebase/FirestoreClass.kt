@@ -85,16 +85,18 @@ class FirestoreClass {
             .addOnSuccessListener {
                 Log.i(activity.javaClass.simpleName, "TaskList updated successfully!")
 
-                if (activity is TaskListActivity)
+                if (activity is TaskListActivity) {
                     activity.addUpdateTaskListSuccess()
-                else if (activity is CardDetailsActivity)
+                } else if (activity is CardDetailsActivity) {
                     activity.addUpdateTaskListSuccess()
+                }
             }.addOnFailureListener {
                 exception ->
-                if (activity is TaskListActivity)
-                activity.hideProgressDialog()
-                else if (activity is CardDetailsActivity)
-                activity.hideProgressDialog()
+                if (activity is TaskListActivity) {
+                    activity.hideProgressDialog()
+                } else if (activity is CardDetailsActivity) {
+                    activity.hideProgressDialog()
+                }
                 Log.e(activity.javaClass.simpleName, "Error while creating a board", exception)
             }
     }
@@ -204,7 +206,7 @@ class FirestoreClass {
         return currentUserId
     }
 
-    fun getAssignedMembersListDetails(activity: MembersActivity, assignTo: ArrayList<String>) {
+    fun getAssignedMembersListDetails(activity: Activity, assignTo: ArrayList<String>) {
         mFireStore.collection(Constants.USERS)
             .whereIn(Constants.ID, assignTo)
             .get()
@@ -219,11 +221,18 @@ class FirestoreClass {
                     userList.add(user)
                 }
 
-                activity.setUpMembersList(userList)
-
+                if (activity is MembersActivity){
+                    activity.setUpMembersList(userList)
+                } else if (activity is TaskListActivity) {
+                    activity.boardMembersDetailsList(userList)
+                }
             }.addOnFailureListener {
                 e ->
-                activity.hideProgressDialog()
+                if (activity is MembersActivity){
+                    activity.hideProgressDialog()
+                } else if (activity is TaskListActivity) {
+                    activity.hideProgressDialog()
+                }
                 Log.e(
                     activity.javaClass.simpleName,
                     "Error while loading a board.",
