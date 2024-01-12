@@ -122,7 +122,7 @@ class CardDetailsActivity : BaseActivity() {
         )
         builder.setIcon(android.R.drawable.ic_dialog_alert)
 
-        builder.setPositiveButton(resources.getString(R.string.yes)) { dialogInterface,which ->
+        builder.setPositiveButton(resources.getString(R.string.yes)) { dialogInterface, which ->
             dialogInterface.dismiss()
             deleteCard()
         }
