@@ -14,8 +14,8 @@ import com.example.project_management.adapters.MemberListItemsAdapter
 import com.example.project_management.databinding.ActivityMembersBinding
 import com.example.project_management.firebase.FirestoreClass
 import com.example.project_management.utils.Constants
-import com.example.project_management.viewmodel.Board
-import com.example.project_management.viewmodel.User
+import com.example.project_management.model.Board
+import com.example.project_management.model.User
 
 
 class MembersActivity : BaseActivity() {

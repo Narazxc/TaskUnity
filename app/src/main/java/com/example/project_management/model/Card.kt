@@ -1,4 +1,4 @@
-package com.example.project_management.viewmodel
+package com.example.project_management.model
 
 import android.os.Parcel
 import android.os.Parcelable

@@ -1,7 +1,6 @@
 package com.example.project_management.view.activity
 
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -11,16 +10,14 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.provider.MediaStore
 import android.util.Log
-import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.example.project_management.R
 import com.example.project_management.databinding.ActivityMyProfileBinding
 import com.example.project_management.firebase.FirestoreClass
 import com.example.project_management.utils.Constants
-import com.example.project_management.viewmodel.User
+import com.example.project_management.model.User
 
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference

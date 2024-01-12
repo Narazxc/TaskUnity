@@ -3,12 +3,11 @@ package com.example.project_management.view.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.project_management.R
 import com.example.project_management.databinding.ItemBoardBinding
-import com.example.project_management.viewmodel.Board
+import com.example.project_management.model.Board
 
 class BoardItemAdapter(
     private val context: Context,

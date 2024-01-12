@@ -2,23 +2,20 @@ package com.example.project_management.view.activity
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_management.R
 import com.example.project_management.adapters.TaskListItemsAdapter
 import com.example.project_management.databinding.ActivityTaskListBinding
 import com.example.project_management.firebase.FirestoreClass
 import com.example.project_management.utils.Constants
-import com.example.project_management.viewmodel.Board
-import com.example.project_management.viewmodel.Card
-import com.example.project_management.viewmodel.Task
-import com.example.project_management.viewmodel.User
-import com.google.api.Distribution.BucketOptions.Linear
+import com.example.project_management.model.Board
+import com.example.project_management.model.Card
+import com.example.project_management.model.Task
+import com.example.project_management.model.User
 
 class TaskListActivity : BaseActivity() {
 

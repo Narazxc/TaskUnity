@@ -10,10 +10,9 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.project_management.R
 import com.example.project_management.databinding.ItemTaskBinding
 import com.example.project_management.view.activity.TaskListActivity
-import com.example.project_management.viewmodel.Task
+import com.example.project_management.model.Task
 
 open class TaskListItemsAdapter(
     private val context: Context,

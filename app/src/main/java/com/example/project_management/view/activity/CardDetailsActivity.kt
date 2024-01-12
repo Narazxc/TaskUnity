@@ -4,26 +4,23 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.project_management.R
 import com.example.project_management.databinding.ActivityCardDetailsBinding
-import com.example.project_management.databinding.ActivityMembersBinding
 import com.example.project_management.dialogs.LabelColorListDialog
 import com.example.project_management.dialogs.MembersListDialog
 import com.example.project_management.firebase.FirestoreClass
 import com.example.project_management.utils.Constants
 import com.example.project_management.view.adapters.CardMemberListItemsAdapter
-import com.example.project_management.viewmodel.Board
-import com.example.project_management.viewmodel.Card
-import com.example.project_management.viewmodel.Task
-import com.example.project_management.viewmodel.SelectedMembers
-import com.example.project_management.viewmodel.User
+import com.example.project_management.model.Board
+import com.example.project_management.model.Card
+import com.example.project_management.model.Task
+import com.example.project_management.model.SelectedMembers
+import com.example.project_management.model.User
 import java.util.Date
 import java.util.Locale
 
@@ -93,12 +90,6 @@ class CardDetailsActivity : BaseActivity() {
             showDataPicker()
         }
     }
-
-    fun addUpdateTaskListSuccess(){
-        hideProgressDialog()
-        setResult(Activity.RESULT_OK)
-        finish()
-    }
     private fun setupActionBar() {
         setSupportActionBar(binding.toolbarCardDetailsActivity)
         val actionBar = supportActionBar
@@ -108,16 +99,6 @@ class CardDetailsActivity : BaseActivity() {
             actionBar.title = mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].name
         }
         binding.toolbarCardDetailsActivity.setNavigationOnClickListener { onBackPressed() }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.action_delete_card -> {
-                alertDialogForDeleteCard(mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].name)
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     fun addUpdateTaskListSuccess() {
@@ -238,7 +219,7 @@ class CardDetailsActivity : BaseActivity() {
             mSelectedDueDateMilliSeconds
         )
 
-        val taskList: ArrayList<com.example.project_management.viewmodel.Task> = mBoardDetails.taskList
+        val taskList: ArrayList<com.example.project_management.model.Task> = mBoardDetails.taskList
         taskList.removeAt(taskList.size - 1)
 
         mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition] = card
@@ -251,7 +232,7 @@ class CardDetailsActivity : BaseActivity() {
         val cardsList: ArrayList<Card> = mBoardDetails.taskList[mTaskListPosition].cards
         cardsList.removeAt(mCardPosition)
 
-        val taskList: ArrayList<com.example.project_management.viewmodel.Task> = mBoardDetails.taskList
+        val taskList: ArrayList<com.example.project_management.model.Task> = mBoardDetails.taskList
         taskList.removeAt(taskList.size - 1)
 
         taskList[mTaskListPosition].cards = cardsList
@@ -367,48 +348,4 @@ class CardDetailsActivity : BaseActivity() {
         datePickerDialog.show()
     }
 
-    private fun updateCardDetails(){
-        val card = Card(
-            binding.etNameCardDetails.text.toString(),
-            mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].createBy,
-            mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo
-        )
-        mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition] = card
-        showProgressDialog(resources.getString(R.string.please_wait))
-        FirestoreClass().addUpdateTaskList(this@CardDetailsActivity, mBoardDetails)
-    }
-
-    private fun deleteCard(){
-        val cardList: ArrayList<Card> = mBoardDetails.taskList[mTaskListPosition].cards
-        cardList.removeAt(mCardPosition)
-        val taskList: ArrayList<Task> = mBoardDetails.taskList
-        taskList.removeAt(taskList.size - 1)
-
-        taskList[mTaskListPosition].cards = cardList
-        showProgressDialog(resources.getString(R.string.please_wait))
-        FirestoreClass().addUpdateTaskList(this@CardDetailsActivity, mBoardDetails)
-    }
-
-    private fun alertDialogForDeleteCard(cardName: String){
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(resources.getString(R.string.alert))
-        builder.setMessage(
-            resources.getString(
-                R.string.confirmation_message_to_delete_card,
-                cardName
-            )
-        )
-        builder.setIcon(android.R.drawable.ic_dialog_alert)
-
-        builder.setPositiveButton(resources.getString(R.string.yes)) { dialogInterface, which ->
-            dialogInterface.dismiss()
-            deleteCard()
-        }
-        builder.setNegativeButton(resources.getString(R.string.no)) { dialogInterface, which ->
-            dialogInterface.dismiss()
-        }
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.setCancelable(false)
-        alertDialog.show()
-    }
 }
