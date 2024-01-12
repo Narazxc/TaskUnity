@@ -3,54 +3,27 @@ name: Build Android APK on Tag
 on:
   push:
     tags:
-      - 'uat-*'
-      - 'prd-*'
+      'v?(uat|prd)-\\d+\\.\\d+\\.\\d+'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    container:
-      image: ghcr.io/leapkh/android-ci:1.0.1
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Set up JDK
-        uses: actions/setup-java@v2
+      - uses: actions/checkout@v3
+      - name: Set up Docker context
+        run: echo "DOCKER_BUILDKIT=1" >> .dockerfile
+      - name: Login to GitHub Container Registry
+        run: docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+      - name: Use ghcr.io/leapkh/android-ci:1.0.1 image
+        uses: actions/setup-docker-image@v1
         with:
-          distribution: 'adopt'
-          java-version: '11'
-
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/wrapper
-            ~/.gradle/caches
-          key: TaskUnity
-
+          image: ghcr.io/leapkh/android-ci:1.0.1
+      - name: Make build script executable
+        run: chmod +x ./../../scripts/build_script.sh
       - name: Build APK
-        run: |
-          tag=$GITHUB_REF
-          build_type='release'
-          if [[ $tag == 'uat-'* ]]; then
-            flavor='uat'
-          elif [[ $tag == 'prd-'* ]]; then
-            flavor='prd'
-          else
-            echo "Invalid tag format. Exiting..."
-            exit 1
-          fi
-          ./gradlew "assemble${flavor}${build_type}"
-          apkDir="app/build/outputs/apk/${flavor}/${build_type}"
-          apkMetaFile="$apkDir/output-metadata.json"
-          apkFile=$(cat $apkMetaFile | jq -r '.elements[0].outputFile')
-          cp "$apkDir/$apkFile" "TaskUnity.apk"
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v2
+        run: ./../../scripts/build_script.sh
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
         with:
-          name: TaskUnity
+          name: TaskUnity.apk
           path: TaskUnity.apk
