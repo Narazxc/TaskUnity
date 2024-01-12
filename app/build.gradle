@@ -24,19 +24,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-
-        debug {
-
-        }
-
-
-    }
-
     productFlavors {
         uat {
             dimension 'TaskUnity'
@@ -50,6 +37,52 @@ android {
             resValue 'string', 'app_name', 'Task Unity'
 //            buildConfigField 'String', 'apiUrl', 'https://api.taskunity.com'
         }
+
+    }
+
+
+    signingConfigs {
+
+        uatRelease {
+            storeFile file('TaskUnity.jks')
+            storePassword 'test12345'
+            keyAlias 'TaskUnity'
+            keyPassword 'test12345'
+        }
+
+        prdRelease {
+            storeFile file('TaskUnity-prd.jks')
+            storePassword 'test12345'
+            keyAlias 'TaskUnity'
+            keyPassword 'test12345'
+        }
+
+        uatDebug {
+
+        }
+
+
+        prdDebug {
+
+        }
+
+
+    }
+
+
+    buildTypes {
+        release {
+            productFlavors.uat.signingConfig signingConfigs.uatRelease
+            productFlavors.prd.signingConfig signingConfigs.prdRelease
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+
+        }
+
 
     }
 
