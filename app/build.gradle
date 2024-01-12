@@ -8,6 +8,8 @@ android {
     namespace 'com.example.project_management'
     compileSdk 34
 
+    flavorDimensions "TaskUnity"
+
     buildFeatures {
         viewBinding = true
     }
@@ -27,7 +29,33 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+
+        }
+
+
     }
+
+    productFlavors {
+        uat {
+            dimension 'TaskUnity'
+            resValue 'string', 'app_name', 'Task Unity UAT'
+//            buildConfigField 'String', 'apiUrl', 'https://test.api.taskunity.com'
+
+        }
+
+        prd {
+            dimension 'TaskUnity'
+            resValue 'string', 'app_name', 'Task Unity'
+//            buildConfigField 'String', 'apiUrl', 'https://api.taskunity.com'
+        }
+
+    }
+
+
+
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
