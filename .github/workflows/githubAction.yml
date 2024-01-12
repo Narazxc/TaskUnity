@@ -35,9 +35,9 @@ jobs:
         run: |
           tag=$GITHUB_REF
           build_type='release'
-          if [[ $tag == 'refs/tags/uat-'* ]]; then
+          if [[ $tag == 'uat-'* ]]; then
             flavor='uat'
-          elif [[ $tag == 'refs/tags/prd-'* ]]; then
+          elif [[ $tag == 'prd-'* ]]; then
             flavor='prd'
           else
             echo "Invalid tag format. Exiting..."
