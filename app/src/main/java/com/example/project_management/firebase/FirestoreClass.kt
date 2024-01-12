@@ -12,11 +12,10 @@ import com.example.project_management.view.activity.MyProfileActivity
 import com.example.project_management.view.activity.SignInActivity
 import com.example.project_management.view.activity.SignUpActivity
 import com.example.project_management.view.activity.TaskListActivity
-import com.example.project_management.viewmodel.Board
-import com.example.project_management.viewmodel.User
+import com.example.project_management.model.Board
+import com.example.project_management.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 
 class FirestoreClass {

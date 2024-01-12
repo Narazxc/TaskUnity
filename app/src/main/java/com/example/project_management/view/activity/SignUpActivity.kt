@@ -1,13 +1,12 @@
 package com.example.project_management.view.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.project_management.R
 import com.example.project_management.databinding.ActivitySignupBinding
 import com.example.project_management.firebase.FirestoreClass
-import com.example.project_management.viewmodel.User
+import com.example.project_management.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 

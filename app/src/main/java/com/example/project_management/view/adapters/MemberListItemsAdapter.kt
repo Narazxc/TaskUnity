@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.example.project_management.R
 import com.example.project_management.databinding.ItemMemberBinding
 import com.example.project_management.utils.Constants
-import com.example.project_management.viewmodel.User
+import com.example.project_management.model.User
 
 class MemberListItemsAdapter (
     private val context: Context,

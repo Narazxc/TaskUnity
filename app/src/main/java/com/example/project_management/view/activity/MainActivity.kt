@@ -10,7 +10,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.project_management.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -22,8 +21,8 @@ import com.bumptech.glide.Glide
 import com.example.project_management.view.adapters.BoardItemAdapter
 import com.example.project_management.utils.Constants
 import com.example.project_management.firebase.FirestoreClass
-import com.example.project_management.viewmodel.Board
-import com.example.project_management.viewmodel.User
+import com.example.project_management.model.Board
+import com.example.project_management.model.User
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging

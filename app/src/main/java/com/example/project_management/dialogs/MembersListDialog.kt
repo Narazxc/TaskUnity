@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_management.adapters.MemberListItemsAdapter
 import com.example.project_management.databinding.DialogListBinding
-import com.example.project_management.viewmodel.User
+import com.example.project_management.model.User
 
 abstract class MembersListDialog(
     context: Context,

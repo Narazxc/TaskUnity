@@ -1,11 +1,10 @@
 package com.example.project_management.view.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.project_management.R
 import com.example.project_management.databinding.ActivitySigninBinding
-import com.example.project_management.viewmodel.User
+import com.example.project_management.model.User
 import com.google.firebase.auth.FirebaseAuth
 
 class SignInActivity : BaseActivity() {

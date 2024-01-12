@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.project_management.R
 import com.example.project_management.databinding.ItemCardSelectedMemberBinding
-import com.example.project_management.utils.Constants
-import com.example.project_management.viewmodel.SelectedMembers
+import com.example.project_management.model.SelectedMembers
 
 class CardMemberListItemsAdapter(
     private val context: Context,

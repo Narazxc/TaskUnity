@@ -2,12 +2,10 @@ package com.example.project_management.view.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.widget.EditText
 import com.bumptech.glide.Glide
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import android.os.Bundle
 import com.example.project_management.R
@@ -19,7 +17,7 @@ import android.util.Log
 import android.widget.Button
 import com.example.project_management.firebase.FirestoreClass
 import com.example.project_management.utils.Constants
-import com.example.project_management.viewmodel.Board
+import com.example.project_management.model.Board
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import de.hdodenhof.circleimageview.CircleImageView

@@ -6,8 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_management.databinding.ItemCardBinding
-import com.example.project_management.viewmodel.Board
-import com.example.project_management.viewmodel.Card
+import com.example.project_management.model.Card
 
 
 class CardListItemsAdapter (
